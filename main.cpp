@@ -1,24 +1,33 @@
 #include <windows.h>
 #include <stdio.h>
+#include "GOProcessUtils.h"
 
 int main( int argc, char** argv )
 {
-	DWORD pID = 0;
-	HANDLE process = 0;
-	DWORD curTarget = 0;
+	GOProcessUtils gpu;
 
-	GetWindowThreadProcessId(FindWindow( NULL, L"Counter-Strike: Global Offensive" ), &pID );
+	HANDLE CSHandle = gpu.findCSGoProcess();
+	if( CSHandle == NULL )
+	{
+		printf( "Could not find GO");
+		return 1;
+	}
 
-	process = OpenProcess(PROCESS_VM_READ, true, pID );
+	DWORD clientHandle = gpu.findClientModule();
+	if( clientHandle == 0 )
+	{
+		printf( "Could not find client base");
+		return 1;
+	}
 
-	if( !process )
-		printf( "Can't find go" );
-
-	Sleep( 5000 );
+	DWORD curTargetAddress, curTarget;
+	
+	ReadProcessMemory( CSHandle, (void*)(clientHandle + 0x00A6C434), &curTargetAddress, 4, NULL );
+	curTargetAddress += 0x23AC;
 
 	while( 1 )
 	{
-		ReadProcessMemory( process, (void*)0x127a8654, &curTarget, 4, NULL );
+		ReadProcessMemory( CSHandle, (void*)curTargetAddress, &curTarget, 4, NULL );
 		if( curTarget > 0 )
 		{
 			mouse_event( MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0 );
