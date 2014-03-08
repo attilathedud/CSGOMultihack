@@ -1,4 +1,4 @@
 CSGOMultihack
 =============
 
-A repo to hold our continuing 
+A repo to hold continuing development on a CSGO multihack
