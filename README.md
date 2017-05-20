@@ -1,4 +1,4 @@
-CSGOMultihack
+CSGOTriggerBot
 =============
 
-A repo to hold continuing development on a CSGO multihack
+A proof-of-concept that demonstrated using CSGO's internal nametags to trigger a shot.

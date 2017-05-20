@@ -1,3 +1,8 @@
+/*!
+*	Set of utilities to help allocate a process handle to CSGO and find the internal
+*	address of client.dll.
+*/
+
 #pragma once
 
 #include <Windows.h>

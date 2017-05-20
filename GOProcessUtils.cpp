@@ -27,6 +27,14 @@ HANDLE GOProcessUtils::getGoProcessHandle(void)
 	return goProcessHandle;
 }
 
+/*!
+*	Helper method that uses CreateToolhelp32Snapshot to get a listing of all loaded
+*	libraries present in CSGO and then loops until it finds client.dll. 
+*
+*	Sets clientdllBase to the found address.
+*
+*	Returns: DWORD holding the address of client.dll.
+*/
 DWORD GOProcessUtils::findClientModule(void)
 {
 	HANDLE snapshot;
@@ -62,6 +70,16 @@ DWORD GOProcessUtils::findClientModule(void)
 	return clientdllBase;
 }
 
+/*!
+*	Helper method that uses CreateToolhelp32Snapshot to iterate through processes to find 
+*	csgo. Once it finds it, it opens a handle with all access to the process.
+*
+*	Sets goProcessId to the process id of csgo.
+*	Sets goProcessHandle to an open handle of csgo. When the class is deconstructed the handle
+*	is closed.
+*
+*	Returns the handle to csgo.
+*/
 HANDLE GOProcessUtils::findCSGoProcess(void)
 {
 	HANDLE snapshot;
